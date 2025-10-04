@@ -17,6 +17,7 @@ A comprehensive Node.js backend application for task management with JWT authent
 ## ✨ Features
 
 ### 🔐 Authentication System
+
 - **User Registration** with email validation
 - **Secure Login** with JWT tokens
 - **Password Hashing** using bcrypt
@@ -25,6 +26,7 @@ A comprehensive Node.js backend application for task management with JWT authent
 - **Logout Functionality**
 
 ### 📝 Task Management (Full CRUD)
+
 - **Create Tasks** with title, description, priority, due date, and tags
 - **Read Tasks** with filtering, sorting, and pagination
 - **Update Tasks** status, content, and properties
@@ -34,6 +36,7 @@ A comprehensive Node.js backend application for task management with JWT authent
 - **Task Statistics** and analytics
 
 ### 🛡️ Security Features
+
 - **JWT Authentication** for secure API access
 - **Rate Limiting** to prevent abuse
 - **CORS Configuration** for frontend integration
@@ -55,6 +58,7 @@ A comprehensive Node.js backend application for task management with JWT authent
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js (v14 or higher)
 - MongoDB (local or Atlas)
 - Git
@@ -62,23 +66,27 @@ A comprehensive Node.js backend application for task management with JWT authent
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/Shubhamdas27/task-backend.git
 cd task-backend
 ```
 
 2. **Install dependencies**
+
 ```bash
 npm install
 ```
 
 3. **Environment setup**
+
 ```bash
 cp .env.example .env
 # Edit .env with your configuration
 ```
 
 4. **Start the server**
+
 ```bash
 # Development mode
 npm run dev
@@ -88,11 +96,13 @@ npm start
 ```
 
 5. **Seed database (optional)**
+
 ```bash
 npm run seed
 ```
 
 6. **Run tests**
+
 ```bash
 npm run test:api
 ```
@@ -100,6 +110,7 @@ npm run test:api
 ## 🌐 API Documentation
 
 ### Base URL
+
 ```
 http://localhost:5000/api
 ```
@@ -107,6 +118,7 @@ http://localhost:5000/api
 ### Authentication Endpoints
 
 #### Register User
+
 ```http
 POST /api/auth/register
 Content-Type: application/json
@@ -119,6 +131,7 @@ Content-Type: application/json
 ```
 
 #### Login User
+
 ```http
 POST /api/auth/login
 Content-Type: application/json
@@ -130,12 +143,14 @@ Content-Type: application/json
 ```
 
 #### Get User Profile
+
 ```http
 GET /api/auth/profile
 Authorization: Bearer <jwt_token>
 ```
 
 #### Logout User
+
 ```http
 POST /api/auth/logout
 Authorization: Bearer <jwt_token>
@@ -144,12 +159,14 @@ Authorization: Bearer <jwt_token>
 ### Task Management Endpoints
 
 #### Get All Tasks
+
 ```http
 GET /api/tasks?page=1&limit=10&status=pending&priority=high&search=project
 Authorization: Bearer <jwt_token>
 ```
 
 #### Create Task
+
 ```http
 POST /api/tasks
 Authorization: Bearer <jwt_token>
@@ -166,12 +183,14 @@ Content-Type: application/json
 ```
 
 #### Get Single Task
+
 ```http
 GET /api/tasks/:id
 Authorization: Bearer <jwt_token>
 ```
 
 #### Update Task
+
 ```http
 PUT /api/tasks/:id
 Authorization: Bearer <jwt_token>
@@ -184,12 +203,14 @@ Content-Type: application/json
 ```
 
 #### Delete Task
+
 ```http
 DELETE /api/tasks/:id
 Authorization: Bearer <jwt_token>
 ```
 
 #### Get Task Statistics
+
 ```http
 GET /api/tasks/stats
 Authorization: Bearer <jwt_token>
@@ -198,6 +219,7 @@ Authorization: Bearer <jwt_token>
 ### Utility Endpoints
 
 #### Health Check
+
 ```http
 GET /api/health
 ```
@@ -231,6 +253,7 @@ RATE_LIMIT_MAX_REQUESTS=100
 ## 🗄️ Database Schema
 
 ### User Model
+
 ```javascript
 {
   name: String (required),
@@ -242,6 +265,7 @@ RATE_LIMIT_MAX_REQUESTS=100
 ```
 
 ### Task Model
+
 ```javascript
 {
   title: String (required),
@@ -259,6 +283,7 @@ RATE_LIMIT_MAX_REQUESTS=100
 ## 🧪 Testing
 
 ### Automated Testing
+
 ```bash
 # Run comprehensive API tests
 npm run test:api
@@ -268,6 +293,7 @@ npm run seed
 ```
 
 ### Demo Credentials
+
 ```
 Email: john@example.com | Password: password123
 Email: jane@example.com | Password: password123
@@ -278,6 +304,7 @@ Email: sarah@example.com | Password: password123
 ### Manual Testing with cURL
 
 **Register User:**
+
 ```bash
 curl -X POST http://localhost:5000/api/auth/register \
   -H "Content-Type: application/json" \
@@ -285,6 +312,7 @@ curl -X POST http://localhost:5000/api/auth/register \
 ```
 
 **Login User:**
+
 ```bash
 curl -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
@@ -292,6 +320,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 ```
 
 **Get Tasks (replace TOKEN):**
+
 ```bash
 curl -X GET http://localhost:5000/api/tasks \
   -H "Authorization: Bearer TOKEN"
@@ -328,16 +357,19 @@ task-backend/
 ## 🚀 Deployment
 
 ### Local Development
+
 ```bash
 npm run dev
 ```
 
 ### Production
+
 ```bash
 npm start
 ```
 
 ### Docker (Optional)
+
 ```dockerfile
 FROM node:18-alpine
 WORKDIR /app
@@ -349,6 +381,7 @@ CMD ["npm", "start"]
 ```
 
 ### Environment Variables for Production
+
 - Set `NODE_ENV=production`
 - Use secure `JWT_SECRET`
 - Configure production MongoDB URI
@@ -376,15 +409,19 @@ CMD ["npm", "start"]
 ## 📈 API Response Format
 
 ### Success Response
+
 ```json
 {
   "success": true,
   "message": "Operation successful",
-  "data": { /* response data */ }
+  "data": {
+    /* response data */
+  }
 }
 ```
 
 ### Error Response
+
 ```json
 {
   "success": false,
@@ -394,11 +431,14 @@ CMD ["npm", "start"]
 ```
 
 ### Paginated Response
+
 ```json
 {
   "success": true,
   "data": {
-    "tasks": [ /* array of tasks */ ],
+    "tasks": [
+      /* array of tasks */
+    ],
     "total": 50,
     "page": 1,
     "limit": 10,
@@ -422,6 +462,7 @@ This project is licensed under the ISC License.
 ## 👨‍💻 Author
 
 **Shubham Das**
+
 - GitHub: [@Shubhamdas27](https://github.com/Shubhamdas27)
 
 ## 🙏 Acknowledgments
