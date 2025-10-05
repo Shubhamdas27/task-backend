@@ -27,7 +27,7 @@ const allowedOrigins = [
   "https://task-nine-rouge.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174",
-  "http://localhost:3000"
+  "http://localhost:3000",
 ];
 
 app.use(
@@ -35,17 +35,17 @@ app.use(
     origin: function (origin, callback) {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      
+
       // Allow localhost origins in development
-      if (origin && origin.includes('localhost')) {
+      if (origin && origin.includes("localhost")) {
         return callback(null, true);
       }
-      
+
       // Allow specific production origins
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.log('CORS blocked origin:', origin);
+        console.log("CORS blocked origin:", origin);
         callback(null, true); // Allow all for now
       }
     },
