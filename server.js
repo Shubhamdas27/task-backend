@@ -22,7 +22,18 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// CORS configuration
+// CORS configuration - Temporarily allowing all origins for debugging
+app.use(
+  cors({
+    origin: true, // Allow all origins temporarily
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
+
+// More specific CORS for production (commented out for now)
+/*
 const allowedOrigins = [
   "https://task-nine-rouge.vercel.app",
   "http://localhost:5173",
@@ -30,15 +41,13 @@ const allowedOrigins = [
   "http://localhost:3000",
   process.env.FRONTEND_URL,
   process.env.LOCAL_FRONTEND_URL
-].filter(Boolean); // Remove undefined values
+].filter(Boolean);
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
       
-      // In development, allow all localhost origins
       if (process.env.NODE_ENV !== 'production' && origin.includes('localhost')) {
         return callback(null, true);
       }
@@ -55,6 +64,7 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+*/
 
 // Body parsing middleware
 app.use(express.json({ limit: "10mb" }));
