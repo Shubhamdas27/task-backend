@@ -368,6 +368,78 @@ npm run dev
 npm start
 ```
 
+### 🌐 Deploy to Render
+
+#### Prerequisites
+- GitHub repository (✅ Already set up: https://github.com/Shubhamdas27/task-backend.git)
+- MongoDB Atlas database (✅ Already configured)
+
+#### Step-by-Step Render Deployment
+
+1. **Create Render Account**
+   - Go to [render.com](https://render.com)
+   - Sign up with GitHub account
+
+2. **Connect Repository**
+   - Click "New +" → "Web Service"
+   - Connect GitHub account
+   - Select repository: `Shubhamdas27/task-backend`
+   - Branch: `main`
+
+3. **Configure Service**
+   ```yaml
+   Name: taskflow-backend
+   Region: Oregon (US West)
+   Branch: main
+   Runtime: Node
+   Build Command: npm install
+   Start Command: npm start
+   ```
+
+4. **Environment Variables**
+   Add these in Render Dashboard:
+   ```bash
+   NODE_ENV=production
+   PORT=10000
+   MONGODB_URI=mongodb+srv://shubham:272004@cluster0.viihvbc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+   DB_NAME=taskflow-prod
+   JWT_SECRET=shubhamdas12345678
+   JWT_EXPIRE=30d
+   FRONTEND_URL=https://task-nine-rouge.vercel.app
+   LOCAL_FRONTEND_URL=http://localhost:5173
+   RATE_LIMIT_WINDOW_MS=900000
+   RATE_LIMIT_MAX_REQUESTS=100
+   ```
+
+5. **Deploy**
+   - Click "Create Web Service"
+   - Render will automatically deploy from GitHub
+   - Deployment URL will be: `https://taskflow-backend-[random].onrender.com`
+
+#### Quick Deploy Button
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Shubhamdas27/task-backend)
+
+#### Post-Deployment Setup
+1. **Update Frontend Config**
+   - Update your Vercel frontend (`https://task-nine-rouge.vercel.app`)
+   - Replace API base URL with Render URL
+   - Update CORS settings if needed
+
+2. **Test API Endpoints**
+   ```bash
+   # Health check
+   curl https://your-render-url.onrender.com/api/health
+   
+   # Test registration
+   curl -X POST https://your-render-url.onrender.com/api/auth/register \
+     -H "Content-Type: application/json" \
+     -d '{"name":"Test","email":"test@example.com","password":"password123"}'
+   ```
+
+3. **Monitor Logs**
+   - Check Render dashboard for deployment logs
+   - Monitor for any errors or issues
+
 ### Docker (Optional)
 
 ```dockerfile
