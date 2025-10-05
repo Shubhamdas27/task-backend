@@ -22,13 +22,13 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// CORS configuration - Temporarily allowing all origins for debugging
+// CORS configuration - Allow all origins (updated)
 app.use(
   cors({
-    origin: true, // Allow all origins temporarily
+    origin: "*", // Allow all origins
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
   })
 );
 
@@ -84,7 +84,7 @@ mongoose
 
 // Debug middleware
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path} - Origin: ${req.get('Origin')}`);
+  console.log(`${req.method} ${req.path} - Origin: ${req.get("Origin")}`);
   next();
 });
 
@@ -98,6 +98,8 @@ app.get("/api/health", (req, res) => {
     success: true,
     message: "Server is running",
     timestamp: new Date().toISOString(),
+    version: "v2.0 - CORS Fixed",
+    cors: "All origins allowed"
   });
 });
 
