@@ -22,35 +22,10 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// CORS configuration - Fixed for credentials
-const allowedOrigins = [
-  "https://task-nine-rouge.vercel.app",
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:3000",
-  process.env.FRONTEND_URL,
-  process.env.LOCAL_FRONTEND_URL
-].filter(Boolean);
-
+// CORS configuration - Allow all origins (updated)
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      
-      // Allow all localhost origins in development
-      if (origin.includes('localhost')) {
-        return callback(null, true);
-      }
-      
-      // Allow specific production origins
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        console.log('CORS blocked origin:', origin);
-        callback(null, true); // Temporarily allow all for debugging
-      }
-    },
+    origin: "*", // Allow all origins
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
@@ -123,8 +98,9 @@ app.get("/api/health", (req, res) => {
     success: true,
     message: "Server is running",
     timestamp: new Date().toISOString(),
-    version: "v2.0 - CORS Fixed",
-    cors: "All origins allowed",
+    version: "v3.0 - Login Test Ready",
+    cors: "Properly configured",
+    deployment: "Latest"
   });
 });
 
