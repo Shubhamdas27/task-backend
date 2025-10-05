@@ -24,11 +24,13 @@ app.use(limiter);
 
 // CORS configuration
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "https://task-nine-rouge.vercel.app",
-  process.env.LOCAL_FRONTEND_URL || "http://localhost:5173",
+  "https://task-nine-rouge.vercel.app",
+  "http://localhost:5173",
   "http://localhost:5174",
-  "https://task-nine-rouge.vercel.app"
-];
+  "http://localhost:3000",
+  process.env.FRONTEND_URL,
+  process.env.LOCAL_FRONTEND_URL
+].filter(Boolean); // Remove undefined values
 
 app.use(
   cors({
@@ -36,13 +38,21 @@ app.use(
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
       
+      // In development, allow all localhost origins
+      if (process.env.NODE_ENV !== 'production' && origin.includes('localhost')) {
+        return callback(null, true);
+      }
+      
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        console.log('CORS blocked origin:', origin);
+        callback(new Error(`Not allowed by CORS: ${origin}`));
       }
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
 
@@ -61,6 +71,12 @@ mongoose
     console.error("❌ MongoDB connection error:", err.message);
     console.log("⚠️  Server will continue running without database connection");
   });
+
+// Debug middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path} - Origin: ${req.get('Origin')}`);
+  next();
+});
 
 // Routes
 app.use("/api/auth", authRoutes);

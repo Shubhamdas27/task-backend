@@ -371,22 +371,26 @@ npm start
 ### 🌐 Deploy to Render
 
 #### Prerequisites
+
 - GitHub repository (✅ Already set up: https://github.com/Shubhamdas27/task-backend.git)
 - MongoDB Atlas database (✅ Already configured)
 
 #### Step-by-Step Render Deployment
 
 1. **Create Render Account**
+
    - Go to [render.com](https://render.com)
    - Sign up with GitHub account
 
 2. **Connect Repository**
+
    - Click "New +" → "Web Service"
    - Connect GitHub account
    - Select repository: `Shubhamdas27/task-backend`
    - Branch: `main`
 
 3. **Configure Service**
+
    ```yaml
    Name: taskflow-backend
    Region: Oregon (US West)
@@ -398,6 +402,7 @@ npm start
 
 4. **Environment Variables**
    Add these in Render Dashboard:
+
    ```bash
    NODE_ENV=production
    PORT=10000
@@ -417,19 +422,23 @@ npm start
    - Deployment URL will be: `https://taskflow-backend-[random].onrender.com`
 
 #### Quick Deploy Button
+
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Shubhamdas27/task-backend)
 
 #### Post-Deployment Setup
+
 1. **Update Frontend Config**
+
    - Update your Vercel frontend (`https://task-nine-rouge.vercel.app`)
    - Replace API base URL with Render URL
    - Update CORS settings if needed
 
 2. **Test API Endpoints**
+
    ```bash
    # Health check
    curl https://your-render-url.onrender.com/api/health
-   
+
    # Test registration
    curl -X POST https://your-render-url.onrender.com/api/auth/register \
      -H "Content-Type: application/json" \
